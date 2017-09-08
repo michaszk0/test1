@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta http-equiv="Content-type" content="text/html; charset=utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+
+		<!-- Workee scripts -->
+		<script src="js/app.js"></script>
+		<script src="js/workeeApi.js"></script>
+		<script src="js/dataMock.js"></script>
+		<script src="js/debugger.js"></script>
+		<link rel="stylesheet" href="css/workee.css" />
+
+		<!-- Libs -->
+		<script src="cordova.js"></script>
+		<link rel="stylesheet" href="css/RedTest.min.css" />
+		<link rel="stylesheet" href="css/jquery.mobile.icons.min.css" />
+		<link rel="stylesheet" href="css/jquery.mobile.structure-1.4.5.min.css" />
+
+		<script src="js/jquery-2.1.4.min.js"></script>
+		<script src="js/jquery.validate.js"></script>
+		<script src="js/jquery.mobile-1.4.5.min.js"></script>
+	</head>
+	<body class="ui-page-theme-a" onload="init()">
+
+    <icon src="img/logo.png"/>
+
+		<!--_____________________ LOGIN PAGE____________________ -->
+		<div data-role="page" id="loginPage" data-header-title="Login" data-header-menu="false">
+			<div data-role="main" class="ui-content">
+				<div class="ui-grid-b ui-responsive">
+					<div class="ui-grid-b">
+						<div class="ui-block-a"></div>
+						<div class="ui-block-b">
+							<img style="width:100%" src="img/logo.png"/>
+						</div>
+						<div class="ui-block-c"></div>
+					</div>
+				</div>
+				<form class="formValidation" data-method="login">
+					<fieldset>
+						<input id="emailVal" type="text" name="email" value="michall.kaminskii@gmail.com" placeholder="email" required/>
+						<input id="passwordVal" type="password" name="password" value="m" placeholder="password" required/>
+						<input class="submit" type="submit" value="Submit">
+					</fieldset>
+				</form>
+
+			</div>
+		</div>
+
+		<!--_____________________ MENU PAGE____________________ -->
+		<div data-role="page" id="menuPage">
+			<div data-role="main" class="ui-content">
+				<div class="ui-grid-b ui-responsive">
+					<div data-role="navbar" class="menu">
+						<ul>
+							<li><a href="#newsPage" class="ui-btn">News feed</a></li>
+							<li><a href="#addNewsPage" class="ui-btn">Add a news</a></li>
+							<li><a href="#userPage" onclick="app.getUser(app.getFromLocalStorage('userLogged'))" class="ui-btn">My profile</a></li>
+							<li><a href="#leavesPage" class="ui-btn">Leaves</a></li>
+							<li><a href="#setAbsencePage" class="ui-btn">Set a leave</a></li>
+							<li><a href="#peoplePage" class="ui-btn">People</a></li>
+							<li><a href="#registrationPage" class="ui-btn" onclick="app.clearRegistration()">Registration</a></li>
+
+							<li><a href="#" class="ui-btn" onclick="app.logout()">Logout</a></li>
+						</ul>
+					</div>
+				</div>
+
+			</div>
+		</div>
+
+		<!--_____________________ NEWS PAGE ____________________ -->
+		<div data-role="page" id="newsPage" data-header-title="News" data-action-method="getNews">
+			<div data-role="main" class="ui-content">
+				<div class="ui-grid-b ui-responsive" id="getNewsResult"></div>
+			</div>
+
+		</div>
+
+		<!--_____________________ ADD A NEWS PAGE ____________________ -->
+		<div data-role="page" id="addNewsPage" data-header-title="Add a news" data-header-menu="addNewsPage">
+				<div data-role="main" class="ui-content">
+					<div class="ui-grid-b ui-responsive">
+						<div class="ui-grid-b">
+							<div class="ui-block-a"></div>
+							<div class="ui-block-b">
+								<img style="width:100%" src="img/logo.png"/>
+							</div>
+							<div class="ui-block-c"></div>
+						</div>
+					</div>
+				</div>
+			<form class="formValidation" data-method="setNews">
+				<fieldset>
+					<input id="newsTitleValue" type="text" name="newsTitle" placeholder="What news do you have?" required/>
+					<textarea id="newsBoxValue" name="newsBox" placeholder="Give some specifics"></textarea>
+					<input id="addNewsButton" data-status="setNews" class="submit" type="submit" value="Save" placeholder="Submit"/>
+				</fieldset>
+			</form>
+		</div>
+
+		<!--_____________________ REGISTRATION PAGE____________________ -->
+		<div data-role="page" id="registrationPage" data-header-title="Registration" data-header-menu="registrationPage">
+			<div data-role="main" class="ui-content">
+				<div class="ui-grid-b ui-responsive">
+					<div class="ui-grid-b">
+						<div class="ui-block-a"></div>
+						<div class="ui-block-b">
+							<img style="width:100%" src="img/logo.png"/>
+						</div>
+						<div class="ui-block-c"></div>
+					</div>
+				</div>
+				<form class="formValidation" data-method="register">
+					<fieldset>
+						<input id="nameValue" type="text" name="name" placeholder="your name" required/>
+						<input id="surnameValue" type="text" name="surname" placeholder="your surname" required/>
+						<input id="positionValue" type="text" name="position" placeholder="name of your position" required/>
+						<input id="phoneValue" type="tel" name="phone" placeholder="your phone number" required/>
+						<input id="emailValue" type="email" name="email" placeholder="your email address" required/>
+						<input id="passwordValue" type="password" name="password" placeholder="password" required/>
+						<input id="websiteValue" type="url" name="website" placeholder="link to your website"/>
+						<textarea id="scopeValue" name="scope" placeholder="your daily scope of tasks" ></textarea>
+						<input id="deskValue" type="number" name="desk" placeholder="number of your desk" required/>
+						<input id="birthdayValue" type="date" name="birthday" placeholder="your birthday" required/>
+						<input id="photoVal" type="file" placeholder="your photo"/>
+						<textarea id="interestsValue" name="interests" placeholder="your hobbies or interests"></textarea>
+						<input id="registrationButton" data-status="registration" class="submit" type="submit" value="Save">
+					</fieldset>
+				</form>
+
+			</div>
+		</div>
+
+		<!--_____________________ PEOPLE PAGE ____________________ -->
+		<div data-role="page" id="peoplePage" data-header-title="Search for employees" data-action-method="getUsers" data-header-title="People">
+			<div data-role="main" class="ui-content">
+				<ul id='getPeopleResult'data-role="listview" data-inset="true" data-filter="true">
+				</ul>
+			</div>
+		</div>
+
+		<!--_____________________ USER PAGE____________________ -->
+		<div data-role="page" id="userPage" data-header-title="My profile" data-header-menu="userPage">
+			<div data-role="main" class="ui-content">
+				<div class="ui-grid-b ui-responsive">
+					<div class="ui-grid-a">
+						<div class="ui-block-a">
+							<p id="nameUser">Name</p>
+							<p id="surnameUser">Surname</p>
+						</div>
+						<div class="ui-block-b">
+							<img style="margin: 10px auto 0 auto; display: block;width: 50%;clip-path: circle(50% at 50% 50%);" src="img/user.png" id="myPhoto" onclick="app.editPhoto()"/>
+						</div>
+					</div>
+				<hr/>
+				</div>
+
+				<div class="ui-grid-a">
+					<div class="ui-block-a">
+						<p id="positionUser"></p>
+						<p id="phoneUser">Phone number</p>
+						<p id="emailUser">E-mail address</p>
+						<p id="websiteUser">Personal website</p>
+						<p id="scopeUser">Daily scope of tasks</p>
+						<p id="deskUser">Desk number</p>
+						<p id="birthdayUser">Birthday</p>
+						<p id="interestsUser">Interests/hobbies</p>
+					</div>
+				</div>
+					<a href="#" id="profileEditButton" onclick="app.editUser(app.getFromLocalStorage('userLogged'))" class="ui-btn ui-btn-b ui-shadow ui-corner-all">Edit</a>
+			</div>
+		</div>
+
+        <!--_____________________ LEAVES PAGE____________________ -->
+        <div data-role="page" id="leavesPage" data-header-title="Leaves" data-action-method="getAbsence">
+			<div data-role="main" class="ui-content">
+				<div class="ui-grid-b ui-responsive" id="getLeavesResult"></div>
+			</div>
+		</div>
+
+
+		<!--_____________________ SET A LEAVE PAGE ____________________ -->
+		<div data-role="page" id="setAbsencePage" data-header-title="Set a leave" data-header-menu="setAbsencePage">
+			<div data-role="main" class="ui-content">
+				<div class="ui-grid-b ui-responsive">
+				</div>
+			</div>
+
+            <form class="formValidation" data-method="setAbsence">
+                <fieldset>
+                    <input id="leaveTitleValue" type="text" name="leaveTitle" placeholder="Reason" required/>
+                    <input id="leaveBoxValue" type="date" name="leaveBox" placeholder="Date when will you be absent?" required/>
+                    <input id="addAbsenceButton" data-status="setAbsence" class="submit" type="submit" value="Save" placeholder="Submit"/>
+			    </fieldset>
+			</form>
+
+		</div>
+
+
+
+		<!--_____________________ OTHER PAGES_____________________ -->
+
+
+
+		<!--_____________________ LOADING PAGE____________________ -->
+		<div id="loadingPage" style="display:none">
+			<div class="ui-grid-b ui-responsive">
+					<div class="ui-grid-b">
+						<div class="ui-block-a"></div>
+						<div class="ui-block-b">
+							<img style="width:100%" src="img/logo.png"/>
+						</div>
+						<div class="ui-block-c"></div>
+					</div>
+				</div>
+
+			<div class="spinner">
+				<div class="bounce1"></div>
+				<div class="bounce2"></div>
+				<div class="bounce3"></div>
+			</div>
+				<p class="loadingPageText">Loading....</p>
+			</div>
+		</div>
+
+		<!--_____________________ DIALOG PAGE____________________ -->
+		<div data-role="page" id="dialogPage" data-dialog="true" data-close-btn="right">
+			<div id="dialogHead" data-role="header">
+				<h2 id="dialogHeaderTitle"></h2>
+			</div>
+			<div class="ui-content" role="main">
+				<h2 id="dialogTitle"></h2>
+				<p id="dialogMessage"></p>
+				<p id="dialogTimer"></p>
+				<div class="ui-grid-a" style="display: none">
+					<div class="ui-block-a">
+						<a href="#" id="exit-button" class="ui-btn ui-btn-b ui-shadow ui-corner-all">Exit</a>
+					</div>
+					<div class="ui-block-b">
+						<a href="#" id="cancel-button" class="ui-btn ui-shadow ui-corner-all">Cancel</a>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!--_____________________ TEST PAGE ____________________ -->
+		<div data-role="page" id="testPage">
+			<div data-role="main" class="ui-content">
+
+				<form>
+				   <label for="slider-0">Input slider:</label>
+				   <input type="range" name="slider" id="slider-0" value="25" min="0" max="100"  />
+				</form>
+
+			<form method="post" action="/action_page_post.php">
+			  <fieldset data-role="controlgroup">
+			  <legend>Choose your gender:</legend>
+				<label for="male">Male</label>
+				<input type="radio" name="gender" id="male" value="male" checked>
+				<label for="female">Female</label>
+				<input type="radio" name="gender" id="female" value="female">
+			  </fieldset>
+
+			  <fieldset data-role="controlgroup">
+				<legend>Choose as many favorite colors as you'd like:</legend>
+				  <label for="red">Red</label>
+				  <input type="checkbox" name="favcolor" id="red" value="red" checked>
+				  <label for="green">Green</label>
+				  <input type="checkbox" name="favcolor" id="green" value="green">
+				  <label for="blue">Blue</label>
+				  <input type="checkbox" name="favcolor" id="blue" value="blue" checked>
+			  </fieldset>
+			  <input type="submit" data-inline="true" value="Submit">
+			</form>
+
+				<input type="submit" value="Submit" data-icon="check" data-iconpos="right" data-inline="true">
+
+				<div class="ui-grid-a">
+					<div class="ui-block-a"><button type="button" data-theme="a">Previous</button></div>
+					<div class="ui-block-b"><button type="button" data-theme="a">Next</button></div>
+				</div>
+				<div class="ui-grid-solo">
+					<div class="ui-block-a"><button type="button" data-theme="b">More</button></div>
+				</div>
+
+				<ul data-role="listview" data-inset="true" data-filter="true">
+					<li><a href="#">Acura</a></li>
+					<li><a href="#">Audi</a></li>
+					<li><a href="#">BMW</a></li>
+					<li><a href="#">Cadillac</a></li>
+					<li><a href="#">Ferrari</a></li>
+				</ul>
+
+				<a href="#" data-role="button" data-icon="star" data-theme="a">Button</a>
+
+			</div>
+		</div>
+
+	</body>
+</html>
